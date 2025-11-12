@@ -53,8 +53,13 @@ async function fetchDepartures() {
 setInterval(fetchDepartures, 30000);
 fetchDepartures()
 
-
 function showDepartures() {
+
+  let sentrumDepartures = []
+  let otherWayDepartures = []
+
+  const sentrum = ["Kværnerbyen", "Ekeberg hageby"]
+  const otherWay = ["Kjelsås stasjon", "Tåsen"]
 
   const container = document.getElementById("departures");
   const calls = departuresData.data.stopPlace.estimatedCalls
@@ -63,29 +68,40 @@ function showDepartures() {
   for (let call of calls) {
   // let aimedArrival = call.aimedArrivalTime; 
   // will be used to show how late a bus is  
-  let expectedArrival = new Date(call.expectedArrivalTime);
-  let now = new Date()
-  let timeDiff = Math.floor((expectedArrival - now) / 1000 / 60) 
+    let expectedArrival = new Date(call.expectedArrivalTime);
+    let now = new Date()
+    let timeDiff = Math.floor((expectedArrival - now) / 1000 / 60) 
 
-  let frontText = call.destinationDisplay.frontText;
-  let lineId = call.serviceJourney.journeyPattern.line.id.split(":").pop()
+    let frontText = call.destinationDisplay.frontText;
+    let lineId = call.serviceJourney.journeyPattern.line.id.split(":").pop()
 
-  const div = document.createElement("div");
-  div.classList.add("departures");
-  div.innerHTML = `
-    <span class="line">${lineId} ${frontText}</span>
-    <span class="time">${timeDiff <= 0 ? "nå" : timeDiff + " min"}</span>
-  `;
-  container.appendChild(div);
+    if (sentrum.includes(frontText)) {
+      sentrumDepartures.push(call)
+      console.log("pushed", frontText, "to sentrumDepartures")
+    } else {
+      otherWayDepartures.push(call)
+      console.log("pushed", frontText, "to otherWayDepartures")
+    }
+
+    const div = document.createElement("div");
+    div.classList.add("departures");
+    div.innerHTML = `
+      <span class="line">${lineId} ${frontText}</span>
+      <span class="time">${timeDiff <= 0 ? "nå" : timeDiff + " min"}</span>
+    `;
+    container.appendChild(div);
   
-  
-  console.log(`${lineId} ${frontText}: ${timeDiff}`)
-  }
-  console.log("-------------------------")
-}
+    
+    // console.log(`${lineId} ${frontText}: ${timeDiff}`)
+    }
+    //console.log("-------------------------")
+    //console.log("sentrum:", sentrumDepartures);
+    //console.log("otherWay", otherWayDepartures)
+    //console.log("-------------------------")
+
+    }
 
 
 setInterval(showDepartures, 9000);
-
 
 
