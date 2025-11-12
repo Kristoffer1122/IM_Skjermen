@@ -61,46 +61,56 @@ function showDepartures() {
   const sentrum = ["Kværnerbyen", "Ekeberg hageby"]
   const otherWay = ["Kjelsås stasjon", "Tåsen"]
 
-  const container = document.getElementById("departures");
+  const containerOtherWay = document.getElementById("departuresOtherWay");
+  const containerSentrum = document.getElementById("departuresSentrum")
   const calls = departuresData.data.stopPlace.estimatedCalls
 
-  container.innerHTML = "";
+  containerOtherWay.innerHTML = "";
+  containerSentrum.innerHTML = "";
+
+  // Splitting data into directions
   for (let call of calls) {
-  // let aimedArrival = call.aimedArrivalTime; 
-  // will be used to show how late a bus is  
-    let expectedArrival = new Date(call.expectedArrivalTime);
-    let now = new Date()
-    let timeDiff = Math.floor((expectedArrival - now) / 1000 / 60) 
-
-    let frontText = call.destinationDisplay.frontText;
-    let lineId = call.serviceJourney.journeyPattern.line.id.split(":").pop()
-
+    frontText = call.destinationDisplay.frontText
     if (sentrum.includes(frontText)) {
       sentrumDepartures.push(call)
-      console.log("pushed", frontText, "to sentrumDepartures")
     } else {
       otherWayDepartures.push(call)
       console.log("pushed", frontText, "to otherWayDepartures")
     }
+  }
 
-    const div = document.createElement("div");
-    div.classList.add("departures");
-    div.innerHTML = `
-      <span class="line">${lineId} ${frontText}</span>
-      <span class="time">${timeDiff <= 0 ? "nå" : timeDiff + " min"}</span>
+  for (let sentrumDeparture of sentrumDepartures) {
+    let sentrumFrontText = sentrumDeparture.destinationDisplay.frontText
+    let sentrumExpectedArrival = new Date(sentrumDeparture.expectedArrivalTime)
+    let now = new Date()
+    let sentrumTimeDiff = Math.floor((sentrumExpectedArrival - now ) / 1000 / 60)
+    let sentrumLineId = sentrumDeparture.serviceJourney.journeyPattern.line.id.split(":").pop()
+    const sentrumDiv = document.createElement("div");
+    sentrumDiv.classList.add("departures");
+    sentrumDiv.innerHTML = `
+      <span class="sentrumLine">${sentrumLineId} ${sentrumFrontText}</span>
+      <span class="time">${sentrumTimeDiff <= 0 ? "nå" : sentrumTimeDiff + " min"}</span>
     `;
-    container.appendChild(div);
-  
-    
-    // console.log(`${lineId} ${frontText}: ${timeDiff}`)
-    }
-    //console.log("-------------------------")
-    //console.log("sentrum:", sentrumDepartures);
-    //console.log("otherWay", otherWayDepartures)
-    //console.log("-------------------------")
+    containerSentrum.appendChild(sentrumDiv);
 
-    }
+  }
+  for (let otherWayDeparture of otherWayDepartures) {
+    let otherWayFrontText = otherWayDeparture.destinationDisplay.frontText
+    let otherWaylineId = otherWayDeparture.serviceJourney.journeyPattern.line.id.split(":").pop()
+    let otherWayExpectedArrival = new Date(otherWayDeparture.expectedArrivalTime)
+    now = new Date()
+    let otherWayTimeDiff = Math.floor((otherWayExpectedArrival - now) / 1000 / 60 )
 
+    console.log(otherWaylineId)
+    const otherWayDiv = document.createElement("div");
+    otherWayDiv.classList.add("departures");
+    otherWayDiv.innerHTML = `
+      <span class="otherWayLine">${otherWaylineId} ${otherWayFrontText}</span>
+      <span class="time">${otherWayTimeDiff <= 0 ? "nå" : otherWayTimeDiff + " min" }</span>
+    `;
+    containerOtherWay.appendChild(otherWayDiv)
+  }
+}
 
 setInterval(showDepartures, 9000);
 
