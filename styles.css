@@ -37,8 +37,10 @@ body {
   left: 0;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-content: flex-start;
 }
 
 h2 {
@@ -49,6 +51,7 @@ h2 {
   position: relative;
   padding-bottom: 0.5vh;
   flex-shrink: 0;
+  width: 100%;
 }
 
 h2::after {
@@ -82,7 +85,7 @@ h3::before {
 
 #departuresSentrum,
 #departuresOtherWay {
-  flex: 1 1 0;
+  flex: 1 1 45%;
   min-height: 0;
   overflow: hidden;
   display: flex;
@@ -90,7 +93,7 @@ h3::before {
   gap: 0.8vh;
 }
 
-the.departures {
+.departures {
   background: var(--departure-bg);
   padding: 1.2vh 1.5vw;
   border-radius: var(--box-radius);
@@ -102,5 +105,7 @@ the.departures {
   flex-shrink: 0;
 }
 
-the.departures:hover {
+.departures:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
