@@ -1,199 +1,149 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
 
 :root {
-  --primary-color: #d6001c;  
-  --primary-gradient: linear-gradient(135deg, #d6001c 0%, #a8001a 100%);
-  --text-color: #1a1a1a;
-  --text-secondary: #6b7280;
-  --background-color: #f8f9fa;
-  --background-gradient: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-  --departure-bg: #ffffff;
-  --realtime-color: #10b981;
-  --box-radius: 12px;
-  --box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  --font-lineName: "Inter", sans-serif;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+--primary-color: #d6001c;  
+--text-color: #1a1a1a;
+--background-color: #f5f5f5;
+--departure-bg: #ffffff;
+--realtime-color: #4caf50;
+--box-radius: 12px;
+--box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+--font-lineName: "Inter", sans-serif;
 }
 
 html, body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  background: var(--background-gradient);
-  height: 3840px;
-  width: 2160px;
+margin: 0;
+padding: 0;
+overflow: hidden;
+background: var(--background-color);
 }
 
 body {
-  font-family: var(--font-lineName), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-  background: var(--background-gradient);
-  color: var(--text-color);
-  padding: 60px;
-  height: 3840px;
-  width: 2160px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
+font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+background: var(--background-color);
+color: var(--text-color);
+padding: 20px;
+box-sizing: border-box;
+
+/* Fixed rotation positioning */
+transform: rotate(0deg) translatey(00%);
+transform-origin: top left;
+width: 100vh;
+height: 100dvw;
+max-height: 100vw;
+position: fixed;
+top: 0;
+left: 0;
+overflow-y: auto;
 }
 
 h2 {
-  font-size: 73px;
-  font-weight: 900;
-  margin: 0 0 50px;
-  color: var(--text-color);
-  position: relative;
-  padding-bottom: 30px;
-  flex-shrink: 0;
-  letter-spacing: -1.4px;
+font-size: clamp(32px, 5vw, 48px);
+font-weight: 900;
+margin-bottom: 16px;
+color: var(--text-color);
+position: relative;
+padding-bottom: 8px;
 }
 
 h2::after {
-  content: "";
-  display: block;
-  width: 105px;
-  height: 6px;
-  background: var(--primary-gradient);
-  margin-top: 30px;
-  border-radius: 3px;
+content: "";
+display: block;
+width: 60px;
+height: 4px;
+background-color: var(--primary-color);
+margin-top: 4px;
+border-radius: 2px;
 }
 
 h3 {
-  font-size: 43px;
-  font-weight: 700;
-  margin: 50px 0 40px;
-  display: flex;
-  align-items: center;
-  gap: 17px;
-  flex-shrink: 0;
-  letter-spacing: -0.7px;
+font-size: clamp(20px, 3vw, 28px);
+font-weight: 700;
+margin: 24px 0 12px;
+display: flex;
+align-items: center;
+gap: 12px;
 }
 
 h3::before {
-  content: "";
-  display: block;
-  width: 8px;
-  height: 43px;
-  background: var(--primary-gradient);
-  border-radius: 4px;
+content: "";
+display: block;
+width: 6px;
+height: 100%;
+background-color: var(--primary-color);
+border-radius: 3px;
 }
 
-.departures-container {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-}
-
-#departuresSentrum,
-#departuresOtherWay {
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
-  padding-bottom: 40px;
-}
-
-.departures-container::-webkit-scrollbar {
-  width: 12px;
-}
-
-.departures-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.departures-container::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.15);
-  border-radius: 8px;
+.departure-list {
+display: flex;
+flex-direction: column;
+gap: 14px;
 }
 
 .departures {
-  background: var(--departure-bg);
-  padding: 35px 40px;
-  border-radius: var(--box-radius);
-  box-shadow: var(--box-shadow);
-  border: 1px solid rgba(0, 0, 0, 0.04);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-shrink: 0;
-  min-height: 98px;
+background: var(--departure-bg);
+padding: 16px 20px;
+border-radius: var(--box-radius);
+box-shadow: var(--box-shadow);
+display: flex;
+justify-content: space-between;
+align-items: center;
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.departures:hover {
+transform: translateY(-2px);
+box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .lineBox {
-  display: flex;
-  align-items: center;
-  gap: 35px;
+display: flex;
+align-items: center;
+gap: 16px;
 }
 
 .lineNumber {
-  background: var(--primary-gradient);
-  color: white;
-  font-weight: 900;
-  font-size: 49px;
-  padding: 14px 24px;
-  border-radius: 11px;
-  min-width: 90px;
-  text-align: center;
-  letter-spacing: -0.7px;
-  box-shadow: 0 3px 8px rgba(214, 0, 28, 0.25);
+background-color: var(--primary-color);
+color: #ffffff;
+font-weight: 700;
+font-size: 24px;  
+display: flex;
+align-items: center;
+justify-content: center;
+width: 56px;          
+height: 56px;
+border-radius: 8px;
+flex-shrink: 0;
 }
 
 .lineName {
-  font-family: var(--font-lineName);
-  font-size: 38px;
-  font-weight: 600;
-  color: var(--text-color);
-  letter-spacing: -0.7px;
+font-family: var(--font-lineName);
+font-size: 20px;      
+font-weight: 600;
 }
 
 .departureTime {
-  font-size: 49px;
-  font-weight: 700;
-  color: var(--text-color);
-  margin-left: auto;
-  padding: 12px 28px;
-  background: rgba(16, 185, 129, 0.1);
-  border-radius: 8px;
-  min-width: 130px;
-  text-align: center;
-  letter-spacing: -0.7px;
+font-size: 20px;      
+font-weight: 700;
+display: flex;
+align-items: center;
+gap: 6px;
 }
 
-.departureTime.now {
-  background: var(--primary-gradient);
-  color: white;
+.realtimeDot {
+width: 10px;
+height: 10px;
+background: var(--realtime-color);
+border-radius: 50%;
+display: inline-block;
 }
 
-.departureTime.soon {
-  background: rgba(16, 185, 129, 0.15);
-  color: var(--realtime-color);
-  font-weight: 800;
-}
-
-.departureTime.later {
-  background: rgba(107, 114, 128, 0.08);
-  color: var(--text-secondary);
-}
-
-.realtime {
-  color: var(--realtime-color);
-}
-
-#departuresSentrum:empty::after,
-#departuresOtherWay:empty::after {
-  content: "Laster inn...";
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 140px;
-  font-size: 34px;
-  color: var(--text-secondary);
-  font-weight: 600;
+@media (max-width: 480px) {
+body { padding: 10px; }
+h2 { font-size: 28px; }
+h3 { font-size: 18px; }
+.lineNumber { width: 48px; height: 48px; font-size: 20px; }
+.lineName { font-size: 18px; }
+.departureTime { font-size: 18px; }
 }
